@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "main", "main", "{31247F5D-72DE-479D-AC7B-EF28EBD97312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thunder.Mock", "src\main\Thunder.Mock\Thunder.Mock.csproj", "{109C2757-B851-4791-BBB5-2D5B606D2276}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{109C2757-B851-4791-BBB5-2D5B606D2276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{109C2757-B851-4791-BBB5-2D5B606D2276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{109C2757-B851-4791-BBB5-2D5B606D2276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{109C2757-B851-4791-BBB5-2D5B606D2276}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{109C2757-B851-4791-BBB5-2D5B606D2276} = {31247F5D-72DE-479D-AC7B-EF28EBD97312}
+	EndGlobalSection
+EndGlobal
