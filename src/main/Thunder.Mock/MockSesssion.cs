@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web;
 using Moq;
 
 namespace Thunder.Mock
 {
     /// <summary>
-    /// Fake session
+    /// Mock session
     /// </summary>
     public static class MockSesssion
     {
         ///<summary>
-        /// Set fake session
+        /// Make mock session
         ///</summary>
-        ///<param name="httpSessionStateBase"></param>
-        ///<param name="sessions"></param>
-        public static void SetFake(this Mock<HttpSessionStateBase> httpSessionStateBase, 
-            Dictionary<string, Object> sessions)
+        ///<param name="sessions">Sessions</param>
+        public static Mock<HttpSessionStateBase> Make(Dictionary<string, object> sessions)
         {
+            var session = new Mock<HttpSessionStateBase>();
             foreach (var item in sessions)
             {
                 var item1 = item;
-                httpSessionStateBase.SetupGet(s => s[item1.Key]).Returns(item.Value);
+                session.SetupGet(s => s[item1.Key]).Returns(item.Value);
             }
+
+            return session;
         }
     }
 }

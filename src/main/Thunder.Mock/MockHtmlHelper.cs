@@ -12,23 +12,24 @@ namespace Thunder.Mock
     public static class MockHtmlHelper
     {
         /// <summary>
-        /// Create mock html helper
+        /// Make mock html helper
         /// </summary>
         /// <param name="viewDataDictionary"></param>
         /// <returns></returns>
-        public static HtmlHelper Create(ViewDataDictionary viewDataDictionary)
+        public static HtmlHelper Make(ViewDataDictionary viewDataDictionary)
         {
+            var context = new Mock<HttpContextBase>();
+            var controllerContext = new ControllerContext(context.Object,
+                new RouteData(),new Mock<ControllerBase>().Object);
+
             var viewContext = new Mock<ViewContext>(
-                new ControllerContext(
-                    new Mock<HttpContextBase>().Object,
-                    new RouteData(),
-                    new Mock<ControllerBase>().Object),
+                controllerContext,
                 new Mock<IView>().Object,
                 viewDataDictionary,
                 new TempDataDictionary(),
                 new StringWriter());
 
-            viewContext.Setup(m => m.HttpContext).Returns(new Mock<HttpContextBase>().Object);
+            viewContext.Setup(m => m.HttpContext).Returns(context.Object);
 
             var mockViewDataContainer = new Mock<IViewDataContainer>();
             mockViewDataContainer.Setup(v => v.ViewData).Returns(viewDataDictionary);

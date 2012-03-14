@@ -8,19 +8,61 @@ using Moq;
 namespace Thunder.Mock
 {
     /// <summary>
-    /// Fake request
+    /// Mock request
     /// </summary>
     public static class MockRequest
     {
-        ///<summary>
-        /// Set fake query string
-        ///</summary>
-        ///<param name="request">Http Request</param>
-        ///<param name="uri">Uri</param>
-        ///<param name="serverVariables">Server variables</param>
-        ///<param name="ajaxRequest">Ajax request</param>
-        public static void SetFake(this Mock<HttpRequestBase> request, Uri uri, NameValueCollection serverVariables, bool ajaxRequest)
+        /// <summary>
+        /// Mock request
+        /// </summary>
+        /// <param name="url">Url</param>
+        public static Mock<HttpRequestBase> Make(string url)
         {
+            return Make(url, new NameValueCollection());
+        }
+        
+        /// <summary>
+        /// Mock request
+        /// </summary>
+        /// <param name="url">Url</param>
+        /// <param name="serverVariables">Server variables</param>
+        public static Mock<HttpRequestBase> Make(string url, NameValueCollection serverVariables)
+        {
+            return Make(url, serverVariables, false);
+        }
+        
+        /// <summary>
+        /// Mock request
+        /// </summary>
+        /// <param name="url">Url</param>
+        /// <param name="ajaxRequest">Is ajax request</param>
+        public static Mock<HttpRequestBase> Make(string url, bool ajaxRequest)
+        {
+            return Make(url, new NameValueCollection(), ajaxRequest);
+        }
+        
+        /// <summary>
+        /// Mock request
+        /// </summary>
+        /// <param name="url">Url</param>
+        /// <param name="serverVariables">Server variables</param>
+        /// <param name="ajaxRequest">Is ajax request</param>
+        public static Mock<HttpRequestBase> Make(string url, NameValueCollection serverVariables,
+                                bool ajaxRequest)
+        {
+            return Make(new Uri(url, UriKind.RelativeOrAbsolute), serverVariables, ajaxRequest);
+        }
+        
+        /// <summary>
+        /// Mock request
+        /// </summary>
+        /// <param name="uri">Uri</param>
+        /// <param name="serverVariables">Server variables</param>
+        /// <param name="ajaxRequest">Is ajax request</param>
+        public static Mock<HttpRequestBase> Make(Uri uri, NameValueCollection serverVariables, bool ajaxRequest)
+        {
+            var request = new Mock<HttpRequestBase>();
+
             request.Setup(x => x.ApplicationPath).Returns("/");
             request.Setup(x => x.HttpMethod).Returns("GET");
             request.Setup(x => x.Url).Returns(uri);
@@ -30,11 +72,11 @@ namespace Thunder.Mock
 
             if (ajaxRequest)
             {
-                request.Setup(x => x.Headers).Returns(new WebHeaderCollection
-                                                      {
-                                                          {"X-Requested-With", "XMLHttpRequest"}
-                                                      });
+                request.Setup(x => x.Headers).Returns(
+                    new WebHeaderCollection {{"X-Requested-With", "XMLHttpRequest"}});
             }
+
+            return request;
         }
 
         private static string GetUrlFileName(string url)
