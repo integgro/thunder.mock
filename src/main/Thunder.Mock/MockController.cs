@@ -100,7 +100,11 @@ namespace Thunder.Mock
         /// <param name="ajaxRequest">Ajax request</param>
         public static void Mock(this Controller controller, Uri uri, Dictionary<string, Object> sessions, NameValueCollection serverVariables, bool ajaxRequest)
         {
-            var context = MockContext.Make(MockRequest.Make(uri, serverVariables, ajaxRequest), MockSesssion.Make(sessions));
+            var context = MockContext.Make(
+                MockRequest.Make(uri, serverVariables, ajaxRequest), 
+                MockResponse.Make(),
+                MockSesssion.Make(sessions));
+
             var requestContext = new RequestContext(context.Object,new RouteData());
 
             controller.ControllerContext = new ControllerContext(requestContext, controller);
